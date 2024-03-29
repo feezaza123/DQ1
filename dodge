@@ -9,7 +9,7 @@ get_ping_cd = false,
 }
 if _G.Rec then _G.Rec:Disconnect() _G.Rec = nil end
 _G.Rec = Workspace.ChildAdded:Connect(function(v)
-    if _G.AutoDodgeSkill and v.Material ~= Enum.Material.Neon then
+    if _G.AutoDodgeSkill then
             local op = v.Material
             wait(.4-(GetPing())) --***
             local a = v:Clone()
