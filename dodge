@@ -3,13 +3,14 @@ _G.NameProof = true
 _G.NoClipAfter = 999
 _G.DodgeSize = 2.25
 local list = {
-name = {"Model"},
+name = {"telegraph"},
 ping = 90,
 get_ping_cd = false,
 }
 if _G.Rec then _G.Rec:Disconnect() _G.Rec = nil end
 _G.Rec = Workspace.ChildAdded:Connect(function(v)
-    if _G.AutoDodgeSkill then
+    if _G.AutoDodgeSkill and table.find(list.name,v.Name:lower()) and v.Material ~= Enum.Material.Neon then
+            local op = v.Material
             wait(.4-(GetPing())) --***
             local a = v:Clone()
             local side = math.clamp(_G.DodgeSize,1.5,3)
@@ -21,7 +22,7 @@ _G.Rec = Workspace.ChildAdded:Connect(function(v)
             end
         game:GetService("TweenService"):Create(a,TweenInfo.new(0.08),{Size = Sizeto}):Play()
         a.Anchored = true
-        a.Transparency = 1
+        a.Transparency = 0.5
         a.CanCollide = true
         a.Name = "DODGEPART"
         a.Parent = v.Parent
@@ -33,11 +34,15 @@ _G.Rec = Workspace.ChildAdded:Connect(function(v)
     end
 end)
 
+local Barrier = workspace.GameMap:FindFirstChild("Barrier",true)
+if Barrier then Barrier:ClearAllChildren() end
 function GetPing()
     spawn(function()
         if not list.get_ping_cd then
             list.get_ping_cd = true
             local PacketSend = tick()
+            local Packet = game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("CompleteDailyQuest","DailyQuest_DungeonClear")
+            repeat task.wait() until Packet
             local Ping = tick() - PacketSend
             list.ping = Ping
             delay(1,function()
@@ -55,7 +60,7 @@ local Name = Char:FindFirstChild("PlayerName",true)
 if _G.NameProof and Name then Name:Destroy() end
 while task.wait() do
 if not Root then break end
-local SpawnLocation = game:GetService("Workspace").playerSpawn
+local SpawnLocation = game.Players.LocalPlayer.RespawnLocation
 local CFR = Root.CFrame
 if SpawnLocation.Position.Y - CFR.p.Y > 30 then
 local RayParams = RaycastParams.new()
