@@ -8,7 +8,7 @@ ping = 90,
 get_ping_cd = false,
 }
 if _G.Rec then _G.Rec:Disconnect() _G.Rec = nil end
-_G.Rec = Workspace.ChildAdded:Connect(function(v)
+_G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
     if _G.AutoDodgeSkill and table.find(list.name,v.Name:lower()) and v.Material ~= Enum.Material.Neon then
             local op = v.Material
             wait(.4-(GetPing())) --***
@@ -22,7 +22,7 @@ _G.Rec = Workspace.ChildAdded:Connect(function(v)
             end
         game:GetService("TweenService"):Create(a,TweenInfo.new(0.08),{Size = Sizeto}):Play()
         a.Anchored = true
-        a.Transparency = 0.5
+        a.Transparency = 1
         a.CanCollide = true
         a.Name = "DODGEPART"
         a.Parent = v.Parent
@@ -80,3 +80,5 @@ end
 end
 game.Players.LocalPlayer.CharacterAdded:Connect(Connection)
 Connection(game.Players.LocalPlayer.Character)
+
+
