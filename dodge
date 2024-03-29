@@ -1,3 +1,5 @@
+--dodge for anime dimension
+
 _G.AutoDodgeSkill = true
 _G.NameProof = true
 _G.NoClipAfter = 999
@@ -5,12 +7,13 @@ _G.DodgeSize = 2.25
 local list = {
 name = {"telegraph"},
 ping = 90,
-get_ping_cd = false, }
+get_ping_cd = false,
+}
 if _G.Rec then _G.Rec:Disconnect() _G.Rec = nil end
 _G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
     if _G.AutoDodgeSkill and table.find(list.name,v.Name:lower()) and v.Material ~= Enum.Material.Neon then
             local op = v.Material
-            wait(.25) --***
+            wait(.15) --***
             local a = v:Clone()
             local side = math.clamp(_G.DodgeSize,1.5,3)
             local Sizeto = v.Size + Vector3.new(side,100,side)
@@ -21,7 +24,7 @@ _G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
             end
         game:GetService("TweenService"):Create(a,TweenInfo.new(0.08),{Size = Sizeto}):Play()
         a.Anchored = true
-        a.Transparency = 1
+        a.Transparency = 0.5
         a.CanCollide = true
         a.Name = "DODGEPART"
         a.Parent = v.Parent
