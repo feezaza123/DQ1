@@ -22,7 +22,7 @@ _G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
             end
         game:GetService("TweenService"):Create(a,TweenInfo.new(0.08),{Size = Sizeto}):Play()
         a.Anchored = true
-        a.Transparency = 1
+        a.Transparency = 0.5
         a.CanCollide = true
         a.Name = "DODGEPART"
         a.Parent = v.Parent
