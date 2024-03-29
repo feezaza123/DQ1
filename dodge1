@@ -3,15 +3,14 @@ _G.NameProof = true
 _G.NoClipAfter = 999
 _G.DodgeSize = 2.25
 local list = {
-name = {"telegraph"},
+name = {"Model"},
 ping = 90,
 get_ping_cd = false,
 }
 if _G.Rec then _G.Rec:Disconnect() _G.Rec = nil end
-_G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
-    if _G.AutoDodgeSkill and table.find(list.name,v.Name:lower()) and v.Material ~= Enum.Material.Neon then
-            local op = v.Material
-            wait(.4-(GetPing())) --***
+_G.Rec = Workspace.ChildAdded:Connect(function(v)
+    if _G.AutoDodgeSkill and table.find(list.name,v.Name:lower()) then
+            wait(.15) --***
             local a = v:Clone()
             local side = math.clamp(_G.DodgeSize,1.5,3)
             local Sizeto = v.Size + Vector3.new(side,100,side)
@@ -34,25 +33,6 @@ _G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
     end
 end)
 
-local Barrier = workspace.GameMap:FindFirstChild("Barrier",true)
-if Barrier then Barrier:ClearAllChildren() end
-function GetPing()
-    spawn(function()
-        if not list.get_ping_cd then
-            list.get_ping_cd = true
-            local PacketSend = tick()
-            local Packet = game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("CompleteDailyQuest","DailyQuest_DungeonClear")
-            repeat task.wait() until Packet
-            local Ping = tick() - PacketSend
-            list.ping = Ping
-            delay(1,function()
-                list.get_ping_cd = false
-            end)
-        end
-    end)
-    return list.ping
-end
-
 function Connection(Char)
 local Human = Char:WaitForChild("Humanoid")
 local Root = Char:WaitForChild("HumanoidRootPart")
@@ -60,7 +40,7 @@ local Name = Char:FindFirstChild("PlayerName",true)
 if _G.NameProof and Name then Name:Destroy() end
 while task.wait() do
 if not Root then break end
-local SpawnLocation = game.Players.LocalPlayer.RespawnLocation
+local SpawnLocation = game:GetService("Workspace").playerSpawn
 local CFR = Root.CFrame
 if SpawnLocation.Position.Y - CFR.p.Y > 30 then
 local RayParams = RaycastParams.new()
@@ -80,4 +60,3 @@ end
 end
 game.Players.LocalPlayer.CharacterAdded:Connect(Connection)
 Connection(game.Players.LocalPlayer.Character)
-
