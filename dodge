@@ -5,8 +5,7 @@ _G.DodgeSize = 2.25
 local list = {
 name = {"telegraph"},
 ping = 90,
-get_ping_cd = false,
-}
+get_ping_cd = false, }
 if _G.Rec then _G.Rec:Disconnect() _G.Rec = nil end
 _G.Rec = Workspace.Folders.Debris.ChildAdded:Connect(function(v)
     if _G.AutoDodgeSkill and table.find(list.name,v.Name:lower()) and v.Material ~= Enum.Material.Neon then
