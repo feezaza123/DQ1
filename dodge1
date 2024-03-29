@@ -1,9 +1,10 @@
+--dd
 _G.AutoDodgeSkill = true
 _G.NameProof = true
 _G.NoClipAfter = 999
 _G.DodgeSize = 2.25
 local list = {
-name = {"Model"},
+name = {"artilleryRock"},
 ping = 90,
 get_ping_cd = false,
 }
